@@ -13,7 +13,7 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-              🎉 感谢您提交Pull Request！请稍等片刻，我们已经将其提交到CI进行检查，一旦有结果会立即通知您！
+            🎉 感谢您提交Pull Request！请稍等片刻，我们已经将其提交到CI进行检查，一旦有结果会立即通知您！
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout code
         uses: actions/checkout@v3
@@ -39,17 +39,16 @@ jobs:
         if: ${{ success() }}
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: 'All tests passed! 🎉 Congratulation!🎉🎉🎉 We will revert your commit '
+          message: ' 🎉 Congratulation!🎉🎉🎉 所有测试均已通过，我们会自动合并你的PR，之后会revert方便其他小伙伴继续练习。可以去试试别的挑战！'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
 
       - name: Comment PR if tests fail
         if: ${{ failure() }}
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: 'Some tests failed. 😞 Please check the [ci logs](${{ github.event.pull_request._links.html.href }}/checks) for more details.'
+          message: '你的代码好像没有通过测试. 😞 请仔细检查你的代码，详情可以在这里找到： [ci logs](${{ github.event.pull_request._links.html.href }}/checks) '
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Merge PR if tests pass
         if: ${{ success() }}
         run: |
@@ -61,19 +60,16 @@ jobs:
           # Get the SHA of the merge commit
           sha=$(echo "$response" | jq -r '.sha')
           echo "merge_commit_sha=$sha" >> $GITHUB_ENV
-          
-      - name: Revert PR
-        if: ${{ success() }}
-        run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          # Checkout the main branch
-          git checkout ${{ github.event.repository.default_branch }}
-
-          # Revert the merge commit
-          git revert -m 1 ${{ github.sha }}
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0 
+      - name: Checkout branch
+        uses: actions/checkout@v3
         with:
-          github_token: ${{ secrets.MY_TOKEN }}
-          branch: ${{ github.ref }}     
+          token: ${{ secrets.MY_TOKEN }}
+          ref: ${{ github.event.inputs.branch }}
+          fetch-depth: 0
+      - name: Revert pushed commit
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git pull --rebase
+          git revert -m 1 ${{ env.merge_commit_sha }}
+          git push

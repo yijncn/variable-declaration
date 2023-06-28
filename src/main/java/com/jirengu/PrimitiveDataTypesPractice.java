@@ -37,7 +37,7 @@ public class PrimitiveDataTypesPractice {
         //定义变量
 
         // 修改语句打印变量
-        System.out.println("ch: ");
+        System.out.println("Ch: ");
 
         //定义变量
 
