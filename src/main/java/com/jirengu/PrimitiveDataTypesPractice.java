@@ -5,44 +5,44 @@ public class PrimitiveDataTypesPractice {
         // 先定义变量，然后再修改对应的打印语句按照README中的格式打印变量
 
         //定义变量
-        byte age = 10;
+
         // 修改语句打印变量
-        System.out.println("Age is: " + age);
+        System.out.println("Age is: ");
 
         //定义变量
-        short height = 30000;
+
         // 修改语句打印变量
-        System.out.println("Height is: " + height);
+        System.out.println("Height is: ");
 
         //定义变量
-        int num = 1000000000;
+
         // 修改语句打印变量
-        System.out.println("Num is: " + num);
+        System.out.println("Num is: ");
 
         //定义变量
-        long distance = 10000000000L;
+
         // 修改语句打印变量
-        System.out.println("Distance is: " + distance);
+        System.out.println("Distance is: ");
 
         //定义变量
-        float rate = 6 / 5f;
+
         // 修改语句打印变量
-        System.out.println("Rate is: " + rate);
+        System.out.println("Rate is: ");
 
         //定义变量
-        double fixedRate = 456 / 123d;
+
         // 修改语句打印变量
-        System.out.println("Fixed rate is: " + fixedRate);
+        System.out.println("Fixed rate is: ");
 
         //定义变量
-        char ch = 'A';
+
         // 修改语句打印变量
-        System.out.println("Ch: " + ch);
+        System.out.println("Ch: ");
 
         //定义变量
-        boolean isUpdated = true;
-        // 修改语句打印变量
-        System.out.println("isUpdated: " + isUpdated);
 
+        // 修改语句打印变量
+        System.out.println("isUpdated: ");
+        
     }
 }
